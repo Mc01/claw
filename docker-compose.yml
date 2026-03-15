@@ -11,7 +11,7 @@ services:
       - OPENCLAW_GATEWAY_TOKEN=${OPENCLAW_GATEWAY_TOKEN}
       - OPENCLAW_GATEWAY_PORT=${OPENCLAW_GATEWAY_PORT}
       - OPENCLAW_GATEWAY_BIND=${OPENCLAW_GATEWAY_BIND}
-      - CONFIG_PATH=/app/config/openclaw.json
+      - OPENCLAW_CONFIG_PATH=/app/config/openclaw.json
       - WORKSPACE_DIR=/app/workspace
     volumes:
       - openclaw_home:/home/node
