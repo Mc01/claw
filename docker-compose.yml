@@ -13,10 +13,10 @@ services:
       - WORKSPACE_DIR=/app/workspace
     volumes:
       - openclaw_home:/home/node
-      -./workspace/config:/app/config
-      -./workspace/memory:/app/memory
-      -./workspace/projects:/app/workspace
-      -./ssh:/home/node/.ssh:ro
+      - ./workspace/config:/app/config
+      - ./workspace/memory:/app/memory
+      - ./workspace/projects:/app/workspace
+      - ./ssh:/home/node/.ssh:ro
     ports:
       - "${TAILSCALE_IP}:18789:18789"
 
