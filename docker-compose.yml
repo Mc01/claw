@@ -1,0 +1,23 @@
+services:
+  openclaw:
+    build: 
+      context:.
+      dockerfile: Dockerfile
+    container_name: claw
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - SYNTHETIC_API_KEY=${SYNTHETIC_API_KEY}
+      - OPENCLAW_GATEWAY_TOKEN=${OPENCLAW_GATEWAY_TOKEN}
+      - CONFIG_PATH=/app/config/openclaw.json
+      - WORKSPACE_DIR=/app/workspace
+    volumes:
+      - openclaw_home:/home/node
+      -./workspace/config:/app/config
+      -./workspace/memory:/app/memory
+      -./workspace/projects:/app/workspace
+    ports:
+      - "${TAILSCALE_IP}:18789:18789"
+
+volumes:
+  openclaw_home:

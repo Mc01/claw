@@ -1,0 +1,3 @@
+[submodule "workspace"]
+	path = workspace
+	url = git@github.com:Mc01/claw-workspace.git
