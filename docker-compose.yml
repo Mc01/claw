@@ -9,7 +9,8 @@ services:
     environment:
       - SYNTHETIC_API_KEY=${SYNTHETIC_API_KEY}
       - OPENCLAW_GATEWAY_TOKEN=${OPENCLAW_GATEWAY_TOKEN}
-      - OPENCLAW_GATEWAY_BIND=lan
+      - OPENCLAW_GATEWAY_PORT=${OPENCLAW_GATEWAY_PORT}
+      - OPENCLAW_GATEWAY_BIND=${OPENCLAW_GATEWAY_BIND}
       - CONFIG_PATH=/app/config/openclaw.json
       - WORKSPACE_DIR=/app/workspace
     volumes:
@@ -19,7 +20,8 @@ services:
       - ./workspace/projects:/app/workspace
       - ./ssh:/home/node/.ssh:ro
     ports:
-      - "${TAILSCALE_IP}:18789:18789"
+      - "${TAILSCALE_IP}:${OPENCLAW_GATEWAY_PORT}:${OPENCLAW_GATEWAY_PORT}"
+    command: ["node", "dist/index.js", "gateway", "--bind", "${OPENCLAW_GATEWAY_BIND}", "--port", "${OPENCLAW_GATEWAY_PORT}", "--allow-unconfigured"]
 
 volumes:
   openclaw_home:
