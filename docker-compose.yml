@@ -9,6 +9,7 @@ services:
     environment:
       - SYNTHETIC_API_KEY=${SYNTHETIC_API_KEY}
       - OPENCLAW_GATEWAY_TOKEN=${OPENCLAW_GATEWAY_TOKEN}
+      - OPENCLAW_GATEWAY_BIND=lan
       - CONFIG_PATH=/app/config/openclaw.json
       - WORKSPACE_DIR=/app/workspace
     volumes:
