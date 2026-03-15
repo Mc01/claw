@@ -19,7 +19,7 @@ services:
       - ./workspace/projects:/app/workspace
       - ./ssh:/home/node/.ssh:ro
     ports:
-      - "${TAILSCALE_IP}:${OPENCLAW_GATEWAY_PORT}:${OPENCLAW_GATEWAY_PORT}"
+      - "127.0.0.1:${OPENCLAW_GATEWAY_PORT}:${OPENCLAW_GATEWAY_PORT}"
 
 volumes:
   openclaw_home:
