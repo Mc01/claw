@@ -14,9 +14,8 @@ services:
       - WORKSPACE_DIR=/app/workspace
     volumes:
       - openclaw_home:/home/node
-      - ./workspace/config:/app/config
-      - ./workspace/memory:/app/memory
-      - ./workspace/projects:/app/workspace
+      - ./config:/app/config
+      - ./workspace:/app/workspace
       - ./ssh:/home/node/.ssh:ro
     ports:
       - "127.0.0.1:${OPENCLAW_GATEWAY_PORT}:${OPENCLAW_GATEWAY_PORT}"
