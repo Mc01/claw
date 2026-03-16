@@ -8,6 +8,7 @@ services:
     env_file: .env
     environment:
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - VOYAGE_API_KEY=${VOYAGE_API_KEY}
       - OPENCLAW_GATEWAY_TOKEN=${OPENCLAW_GATEWAY_TOKEN}
       - OPENCLAW_GATEWAY_PORT=${OPENCLAW_GATEWAY_PORT}
       - OPENCLAW_CONFIG_PATH=/app/config/openclaw.json

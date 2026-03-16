@@ -56,6 +56,12 @@
         "defaults": {
             "model": {
                 "primary": "anthropic/claude-sonnet-4-6"
+            },
+            "memorySearch": {
+                "provider": "voyage",
+                "remote": {
+                    "apiKey": "${VOYAGE_API_KEY}"
+                }
             }
         },
         "list": [
