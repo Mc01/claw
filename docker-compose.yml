@@ -8,6 +8,7 @@ services:
     env_file: .env
     environment:
       - SYNTHETIC_API_KEY=${SYNTHETIC_API_KEY}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
       - VOYAGE_API_KEY=${VOYAGE_API_KEY}
       - BRAVE_API_KEY=${BRAVE_API_KEY}
