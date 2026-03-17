@@ -18,7 +18,7 @@ RUN curl -fsSL https://bun.sh/install | bash
 ENV PATH="/root/.bun/bin:${PATH}"
 
 # Global npm packages
-RUN npm install -g vercel typescript tsx
+RUN npm install -g vercel typescript tsx solhint
 
 # Entrypoint that fixes bind-mount permissions then drops to node
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
@@ -36,8 +36,8 @@ RUN curl -fsSL https://bun.sh/install | bash
 ENV PATH="/home/node/.bun/bin:${PATH}"
 
 # Solidity tools
-RUN pip3 install --break-system-packages slither-analyzer && \
-    npm install -g solhint
+RUN pip3 install --break-system-packages slither-analyzer
+ENV PATH="/home/node/.local/bin:${PATH}"
 
 # Playwright + Chromium (sandbox mode)
 ENV PLAYWRIGHT_BROWSERS_PATH=/home/node/.cache/ms-playwright
