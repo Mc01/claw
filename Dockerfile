@@ -20,6 +20,9 @@ ENV PATH="/root/.bun/bin:${PATH}"
 # Global npm packages
 RUN npm install -g vercel typescript tsx solhint
 
+# Playwright system dependencies (needs root)
+RUN npx -y playwright@latest install --with-deps chromium && rm -rf /home/node/.cache/ms-playwright
+
 # Entrypoint that fixes bind-mount permissions then drops to node
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
@@ -39,10 +42,10 @@ ENV PATH="/home/node/.bun/bin:${PATH}"
 RUN pip3 install --break-system-packages slither-analyzer
 ENV PATH="/home/node/.local/bin:${PATH}"
 
-# Playwright + Chromium (sandbox mode)
+# Playwright Chromium (sandbox mode, system deps installed as root above)
 ENV PLAYWRIGHT_BROWSERS_PATH=/home/node/.cache/ms-playwright
 ENV PLAYWRIGHT_CHROMIUM_SANDBOX=true
-RUN npx -y playwright@latest install --with-deps chromium
+RUN npx -y playwright@latest install chromium
 
 # Git config for commits on behalf of Claw
 RUN git config --global user.name "Claw" && \
