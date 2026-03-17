@@ -35,9 +35,14 @@ ENV PATH="/home/node/.foundry/bin:${PATH}"
 RUN curl -fsSL https://bun.sh/install | bash
 ENV PATH="/home/node/.bun/bin:${PATH}"
 
-# Playwright browsers
+# Solidity tools
+RUN pip3 install --break-system-packages slither-analyzer && \
+    npm install -g solhint
+
+# Playwright + Chromium (sandbox mode)
 ENV PLAYWRIGHT_BROWSERS_PATH=/home/node/.cache/ms-playwright
-RUN npx -y playwright@latest install chromium
+ENV PLAYWRIGHT_CHROMIUM_SANDBOX=true
+RUN npx -y playwright@latest install --with-deps chromium
 
 # Git config for commits on behalf of Claw
 RUN git config --global user.name "Claw" && \
