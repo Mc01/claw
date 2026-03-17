@@ -13,7 +13,8 @@
         },
         "controlUi": {
             "allowedOrigins": [
-                "https://hackathon-mc01.tailb36ad3.ts.net"
+                "https://hackathon-mc01.tailb36ad3.ts.net",
+                "https://hackathon-mc01.tailb36ad3.ts.net:8443"
             ]
         }
     },
