@@ -30,25 +30,7 @@
             "security": "full"
         }
     },
-    "memory": {
-        "backend": "qmd",
-        "citations": "auto",
-        "qmd": {
-            "includeDefaultMemory": true,
-            "searchMode": "search",
-            "update": {
-                "interval": "5m",
-                "onBoot": true,
-                "waitForBootSync": false
-            },
-            "limits": {
-                "maxResults": 6,
-                "maxSnippetChars": 700,
-                "maxInjectedChars": 4000,
-                "timeoutMs": 4000
-            }
-        }
-    },
+
     "models": {
         "mode": "merge",
         "providers": {

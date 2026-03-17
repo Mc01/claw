@@ -35,9 +35,6 @@ ENV PATH="/home/node/.foundry/bin:${PATH}"
 RUN curl -fsSL https://bun.sh/install | bash
 ENV PATH="/home/node/.bun/bin:${PATH}"
 
-# qmd — vector search memory backend
-RUN bun install -g https://github.com/tobi/qmd || echo "qmd install optional"
-
 # Playwright browsers
 ENV PLAYWRIGHT_BROWSERS_PATH=/home/node/.cache/ms-playwright
 RUN npx -y playwright@latest install chromium
