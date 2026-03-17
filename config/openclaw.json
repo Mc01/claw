@@ -2,7 +2,9 @@
     "gateway": {
         "mode": "local",
         "bind": "lan",
-        "trustedProxies": ["172.16.0.0/12"],
+        "trustedProxies": [
+            "172.16.0.0/12"
+        ],
         "auth": {
             "mode": "token",
             "rateLimit": {
@@ -37,10 +39,44 @@
             }
         }
     },
-
     "models": {
         "mode": "merge",
         "providers": {
+            "synthetic": {
+                "baseUrl": "https://api.synthetic.new/anthropic",
+                "apiKey": "${SYNTHETIC_API_KEY}",
+                "api": "anthropic-messages",
+                "models": [
+                    {
+                        "id": "hf:nvidia/Kimi-K2.5-NVFP4",
+                        "name": "Kimi K2.5 NVFP4"
+                    },
+                    {
+                        "id": "hf:moonshotai/Kimi-K2.5",
+                        "name": "Kimi K2.5"
+                    },
+                    {
+                        "id": "hf:MiniMaxAI/MiniMax-M2.5",
+                        "name": "MiniMax M2.5"
+                    },
+                    {
+                        "id": "hf:deepseek-ai/DeepSeek-R1-0528",
+                        "name": "DeepSeek R1"
+                    },
+                    {
+                        "id": "hf:Qwen/Qwen3-Coder-480B-A35B-Instruct",
+                        "name": "Qwen Coder"
+                    },
+                    {
+                        "id": "hf:Qwen/Qwen3.5-397B-A17B",
+                        "name": "Qwen Vision"
+                    },
+                    {
+                        "id": "hf:zai-org/GLM-4.7-Flash",
+                        "name": "GLM 4.7 Flash"
+                    }
+                ]
+            },
             "anthropic": {
                 "baseUrl": "https://api.anthropic.com",
                 "apiKey": "${ANTHROPIC_API_KEY}",
@@ -61,12 +97,17 @@
     "agents": {
         "defaults": {
             "model": {
-                "primary": "anthropic/claude-opus-4-6"
+                "primary": "synthetic/hf:nvidia/Kimi-K2.5-NVFP4",
+                "fallbacks": [
+                    "anthropic/claude-opus-4-6"
+                ]
             },
             "memorySearch": {
-                "provider": "voyage",
+                "provider": "openai",
+                "model": "hf:nomic-ai/nomic-embed-text-v1.5",
                 "remote": {
-                    "apiKey": "${VOYAGE_API_KEY}"
+                    "baseUrl": "https://api.synthetic.new/openai/v1",
+                    "apiKey": "${SYNTHETIC_API_KEY}"
                 },
                 "query": {
                     "hybrid": {
@@ -110,7 +151,10 @@
                 "name": "System Architect",
                 "workspace": "/app/config/agents/architect",
                 "model": {
-                    "primary": "anthropic/claude-opus-4-6"
+                    "primary": "synthetic/hf:MiniMaxAI/MiniMax-M2.5",
+                    "fallbacks": [
+                        "anthropic/claude-opus-4-6"
+                    ]
                 }
             },
             {
@@ -118,7 +162,10 @@
                 "name": "Software Engineer",
                 "workspace": "/app/config/agents/engineer",
                 "model": {
-                    "primary": "anthropic/claude-sonnet-4-6"
+                    "primary": "synthetic/hf:Qwen/Qwen3-Coder-480B-A35B-Instruct",
+                    "fallbacks": [
+                        "anthropic/claude-sonnet-4-6"
+                    ]
                 }
             },
             {
@@ -126,7 +173,10 @@
                 "name": "Code Reviewer",
                 "workspace": "/app/config/agents/reviewer",
                 "model": {
-                    "primary": "anthropic/claude-opus-4-6"
+                    "primary": "synthetic/hf:deepseek-ai/DeepSeek-R1-0528",
+                    "fallbacks": [
+                        "anthropic/claude-opus-4-6"
+                    ]
                 }
             },
             {
@@ -134,7 +184,10 @@
                 "name": "Web3 Researcher",
                 "workspace": "/app/config/agents/researcher",
                 "model": {
-                    "primary": "anthropic/claude-sonnet-4-6"
+                    "primary": "synthetic/hf:zai-org/GLM-4.7-Flash",
+                    "fallbacks": [
+                        "anthropic/claude-sonnet-4-6"
+                    ]
                 }
             },
             {
@@ -145,7 +198,10 @@
                     "ui-ux-pro-max"
                 ],
                 "model": {
-                    "primary": "anthropic/claude-sonnet-4-6"
+                    "primary": "synthetic/hf:Qwen/Qwen3.5-397B-A17B",
+                    "fallbacks": [
+                        "anthropic/claude-sonnet-4-6"
+                    ]
                 }
             },
             {
@@ -153,7 +209,10 @@
                 "name": "Social Media Lead",
                 "workspace": "/app/config/agents/social-lead",
                 "model": {
-                    "primary": "anthropic/claude-sonnet-4-6"
+                    "primary": "synthetic/hf:moonshotai/Kimi-K2.5",
+                    "fallbacks": [
+                        "anthropic/claude-sonnet-4-6"
+                    ]
                 }
             }
         ]
