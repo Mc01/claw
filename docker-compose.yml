@@ -11,6 +11,7 @@ services:
       - VOYAGE_API_KEY=${VOYAGE_API_KEY}
       - OPENCLAW_GATEWAY_TOKEN=${OPENCLAW_GATEWAY_TOKEN}
       - OPENCLAW_GATEWAY_PORT=${OPENCLAW_GATEWAY_PORT}
+      - BRAVE_API_KEY=${BRAVE_API_KEY}
       - OPENCLAW_CONFIG_PATH=/app/config/openclaw.json
       - WORKSPACE_DIR=/app/workspace
     volumes:

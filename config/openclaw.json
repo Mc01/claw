@@ -28,6 +28,13 @@
         },
         "exec": {
             "security": "full"
+        },
+        "web": {
+            "search": {
+                "enabled": true,
+                "provider": "brave",
+                "apiKey": "${BRAVE_API_KEY}"
+            }
         }
     },
 
