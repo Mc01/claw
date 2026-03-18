@@ -2,6 +2,9 @@
     "gateway": {
         "mode": "local",
         "bind": "lan",
+        "trustedProxies": [
+            "172.16.0.0/12"
+        ],
         "auth": {
             "mode": "token",
             "rateLimit": {
@@ -13,12 +16,20 @@
         },
         "controlUi": {
             "allowedOrigins": [
-                "https://vps-73da905b.tail73b9a1.ts.net"
+                "https://hackathon-mc01.tailb36ad3.ts.net",
+                "https://hackathon-mc01.tailb36ad3.ts.net:8443"
             ]
         }
     },
     "session": {
         "dmScope": "per-channel-peer"
+    },
+    "channels": {
+        "telegram": {
+            "enabled": true,
+            "botToken": "${TELEGRAM_BOT_TOKEN}",
+            "allowFrom": ["${TELEGRAM_USER_ID}"]
+        }
     },
     "tools": {
         "fs": {
@@ -26,6 +37,13 @@
         },
         "exec": {
             "security": "full"
+        },
+        "web": {
+            "search": {
+                "enabled": true,
+                "provider": "brave",
+                "apiKey": "${BRAVE_API_KEY}"
+            }
         }
     },
     "models": {
@@ -37,28 +55,47 @@
                 "api": "anthropic-messages",
                 "models": [
                     {
+                        "id": "hf:nvidia/Kimi-K2.5-NVFP4",
+                        "name": "Kimi K2.5 NVFP4"
+                    },
+                    {
                         "id": "hf:moonshotai/Kimi-K2.5",
                         "name": "Kimi K2.5"
                     },
                     {
-                        "id": "hf:zai-org/GLM-4.7-Flash",
-                        "name": "GLM 4.7 Flash"
+                        "id": "hf:MiniMaxAI/MiniMax-M2.5",
+                        "name": "MiniMax M2.5"
                     },
                     {
                         "id": "hf:deepseek-ai/DeepSeek-R1-0528",
                         "name": "DeepSeek R1"
                     },
                     {
-                        "id": "hf:MiniMaxAI/MiniMax-M2.5",
-                        "name": "MiniMax"
+                        "id": "hf:Qwen/Qwen3-Coder-480B-A35B-Instruct",
+                        "name": "Qwen Coder"
                     },
                     {
                         "id": "hf:Qwen/Qwen3.5-397B-A17B",
                         "name": "Qwen Vision"
                     },
                     {
-                        "id": "hf:Qwen/Qwen3-Coder-480B-A35B-Instruct",
-                        "name": "Qwen Coder"
+                        "id": "hf:zai-org/GLM-4.7-Flash",
+                        "name": "GLM 4.7 Flash"
+                    }
+                ]
+            },
+            "anthropic": {
+                "baseUrl": "https://api.anthropic.com",
+                "apiKey": "${ANTHROPIC_API_KEY}",
+                "api": "anthropic-messages",
+                "models": [
+                    {
+                        "id": "claude-opus-4-6",
+                        "name": "Claude Opus 4.6"
+                    },
+                    {
+                        "id": "claude-sonnet-4-6",
+                        "name": "Claude Sonnet 4.6"
                     }
                 ]
             }
@@ -67,7 +104,10 @@
     "agents": {
         "defaults": {
             "model": {
-                "primary": "synthetic/hf:nvidia/Kimi-K2.5-NVFP4"
+                "primary": "synthetic/hf:nvidia/Kimi-K2.5-NVFP4",
+                "fallbacks": [
+                    "anthropic/claude-opus-4-6"
+                ]
             },
             "memorySearch": {
                 "provider": "openai",
@@ -75,60 +115,111 @@
                 "remote": {
                     "baseUrl": "https://api.synthetic.new/openai/v1",
                     "apiKey": "${SYNTHETIC_API_KEY}"
+                },
+                "query": {
+                    "hybrid": {
+                        "enabled": true,
+                        "vectorWeight": 0.7,
+                        "textWeight": 0.3,
+                        "candidateMultiplier": 4,
+                        "mmr": {
+                            "enabled": true,
+                            "lambda": 0.7
+                        },
+                        "temporalDecay": {
+                            "enabled": true,
+                            "halfLifeDays": 7
+                        }
+                    }
                 }
-            }
+            },
+            "bootstrapMaxChars": 25000,
+            "bootstrapTotalMaxChars": 180000
         },
         "list": [
             {
                 "id": "manager",
-                "name": "Project Manager",
+                "name": "Product Owner",
                 "default": true,
+                "workspace": "/app/config/agents/manager",
                 "subagents": {
                     "allowAgents": [
                         "architect",
                         "engineer",
                         "reviewer",
                         "researcher",
-                        "ui-checker"
+                        "ui-checker",
+                        "social-lead"
                     ]
                 }
             },
             {
                 "id": "architect",
                 "name": "System Architect",
+                "workspace": "/app/config/agents/architect",
                 "model": {
-                    "primary": "synthetic/hf:MiniMaxAI/MiniMax-M2.5"
+                    "primary": "synthetic/hf:MiniMaxAI/MiniMax-M2.5",
+                    "fallbacks": [
+                        "anthropic/claude-opus-4-6"
+                    ]
                 }
             },
             {
                 "id": "engineer",
                 "name": "Software Engineer",
+                "workspace": "/app/config/agents/engineer",
                 "model": {
                     "primary": "synthetic/hf:Qwen/Qwen3-Coder-480B-A35B-Instruct",
                     "fallbacks": [
-                        "synthetic/hf:nvidia/Kimi-K2.5-NVFP4"
+                        "anthropic/claude-sonnet-4-6"
                     ]
                 }
             },
             {
                 "id": "reviewer",
                 "name": "Code Reviewer",
+                "workspace": "/app/config/agents/reviewer",
                 "model": {
-                    "primary": "synthetic/hf:deepseek-ai/DeepSeek-R1-0528"
+                    "primary": "synthetic/hf:deepseek-ai/DeepSeek-R1-0528",
+                    "fallbacks": [
+                        "anthropic/claude-opus-4-6"
+                    ]
                 }
             },
             {
                 "id": "researcher",
-                "name": "Context Researcher",
+                "name": "Web3 Researcher",
+                "workspace": "/app/config/agents/researcher",
                 "model": {
-                    "primary": "synthetic/hf:zai-org/GLM-4.7-Flash"
+                    "primary": "synthetic/hf:zai-org/GLM-4.7-Flash",
+                    "fallbacks": [
+                        "anthropic/claude-sonnet-4-6"
+                    ]
                 }
             },
             {
                 "id": "ui-checker",
                 "name": "UI/UX Specialist",
+                "workspace": "/app/config/agents/ui-checker",
+                "skills": [
+                    "ui-ux-pro-max"
+                ],
                 "model": {
-                    "primary": "synthetic/hf:Qwen/Qwen3.5-397B-A17B"
+                    "primary": "synthetic/hf:Qwen/Qwen3.5-397B-A17B",
+                    "fallbacks": [
+                        "anthropic/claude-sonnet-4-6"
+                    ]
+                }
+            },
+            {
+                "id": "social-lead",
+                "name": "Social Media Lead",
+                "workspace": "/app/config/agents/social-lead",
+                "model": {
+                    "primary": "synthetic/hf:moonshotai/Kimi-K2.5",
+                    "fallbacks": [
+                        "anthropic/claude-sonnet-4-6"
+                    ]
                 }
             }
         ]
