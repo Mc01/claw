@@ -1,12 +1,12 @@
 # User Profile
 
 ## Identity
-- **Name**: Claw
+- **Name**: Mc01
 - **Role**: Core Protocol Engineer at Celo / Technical Supervisor
 - **Timezone**: Europe/Warsaw
 
 ## Current Mission
-Design, develop, test, deploy, integrate, distribute, and market a product for the Celo blockchain. Timer starts at Claw's command. Team never sleeps — team stays productive and matches Claw's expectations.
+Design, develop, test, deploy, integrate, distribute, and market a product for the Celo blockchain. Timer starts at Mc01's command. Team never sleeps — team stays productive and matches Mc01's expectations.
 
 ## Product Scope
 - Website (hosted on Vercel)
@@ -18,9 +18,9 @@ Design, develop, test, deploy, integrate, distribute, and market a product for t
 - Support for both Humans & Agents
 
 ## Authority Model
-- Claw is Technical Supervisor — drives architecture, reviews critical decisions
-- When Claw is unavailable (sleeping), Product Owner leads the team
-- Checkpoints and milestones are defined jointly by Claw and Product Owner
+- Mc01 is Technical Supervisor — drives architecture, reviews critical decisions
+- When Mc01 is unavailable (sleeping), Product Owner leads the team
+- Checkpoints and milestones are defined jointly by Mc01 and Product Owner
 
 ## Work Style
 - Extreme time efficiency — every minute counts
